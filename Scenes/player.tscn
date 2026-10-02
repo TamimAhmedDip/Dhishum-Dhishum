@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://olar2eghcltg"]
+
+[ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://Scenes/characters.tscn" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://cr17f4jqty4d2" path="res://assets/art/characters/player.png" id="2_cvnsp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
+radius = 2.0
+height = 12.0
+
+[node name="Player" unique_id=903786037 instance=ExtResource("1_v0iea")]
+health = 30
+damage = 4
+speed = 75.0
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1615538832]
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_cvnsp")
+
+[node name="CharacterSprite" parent="." index="2" unique_id=764435570]
+texture = ExtResource("2_cvnsp")
+centered = false
+offset = Vector2(-24, -48)
+hframes = 10
+vframes = 10
