@@ -8,8 +8,9 @@ extends CharacterBody2D
 @onready var character_sprite = $CharacterSprite
 
 
-var state = State.IDLE
-enum State {WALK, IDLE, ATTACK}
+var state
+enum State {WALK, IDLE, PUNCH}
+
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -21,24 +22,21 @@ func _process(delta: float) -> void:
 func handle_input()->void:
 	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = direction * speed
-	if Input.is_action_just_pressed("Attack"):
-		state = State.ATTACK
+	if can_attack() and Input.is_action_just_pressed("Punch"):
+		state = State.PUNCH
 
 func handle_movement()->void:
-	if can_move():
-		if velocity.length() == 0:
-			state = State.IDLE
-		else:
-			state = State.WALK
+	if velocity.length() != 0:
+		state = State.WALK
 	else:
-		velocity = Vector2.ZERO
+		state = State.IDLE
 
 func handle_animation()->void:
 	if state == State.WALK:
 		playerAnimation.play('walk')
 	elif state == State.IDLE:
 		playerAnimation.play('idle')
-	elif state == State.ATTACK:
+	elif state == State.PUNCH:
 		playerAnimation.play('punch')
 
 func handle_flip()->void:
@@ -48,10 +46,4 @@ func handle_flip()->void:
 		character_sprite.flip_h = true
 
 func can_attack()->bool:
-	return can_move()
-
-func can_move()->bool:
-	return state == State.WALK or state == State.IDLE
-
-func on_action_complete()->void:
-	state = State.IDLE
+	return state == State.IDLE or state == State.WALK

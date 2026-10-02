@@ -1,5 +1,3 @@
 res://world.tscn
-res://Scenes/player.tscn
 res://characters.gd
-res://Scenes/stages.tscn
-res://world.gd
+res://Scenes/player.tscn
