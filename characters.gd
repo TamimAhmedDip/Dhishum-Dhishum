@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var health: int
 @export var damage: int
 @export var speed: float
+@export var jump_intensity: float
 
 @onready var playerAnimation := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
@@ -11,6 +12,15 @@ extends CharacterBody2D
 
 var state = State.IDLE
 enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND}
+
+var anim_map :={
+	State.WALK : 'walk',
+	State.IDLE : 'idle',
+	State.ATTACK : 'punch',
+	State.TAKEOFF : 'takeoff',
+	State.JUMP : 'jump',
+	State.LAND : 'landing',
+}
 
 var height: float = 0
 var height_speed: float = 0
@@ -31,11 +41,10 @@ func _process(delta: float) -> void:
 func handle_input()->void:
 	var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = direction * speed
-	if Input.is_action_just_pressed("Attack"):
+	if can_attack() and Input.is_action_just_pressed("Attack"):
 		state = State.ATTACK
-	if Input.is_action_just_pressed("Jump"):
+	if can_jump() and Input.is_action_just_pressed("Jump"):
 		state = State.TAKEOFF
-		height_speed = 100
 
 func handle_movement()->void:
 	if can_move():
@@ -43,22 +52,10 @@ func handle_movement()->void:
 			state = State.IDLE
 		else:
 			state = State.WALK
-	else:
-		velocity = Vector2.ZERO
 
 func handle_animation()->void:
-	if state == State.WALK:
-		playerAnimation.play('walk')
-	elif state == State.IDLE:
-		playerAnimation.play('idle')
-	elif state == State.ATTACK:
-		playerAnimation.play('punch')
-	elif state == State.TAKEOFF:
-		playerAnimation.play('takeoff')
-	elif state == State.JUMP:
-		playerAnimation.play('jump')
-	elif state == State.LAND:
-		playerAnimation.play('landing')
+	if playerAnimation.has_animation(anim_map[state]):
+		playerAnimation.play(anim_map[state])
 
 func handle_flip()->void:
 	if velocity.x > 0:
@@ -74,8 +71,21 @@ func can_attack()->bool:
 func can_move()->bool:
 	return state == State.WALK or state == State.IDLE
 
+func can_jump():
+	return state == State.WALK or state == State.IDLE
+
+
+#Action Complete - State Change Functions
 func on_action_complete()->void:
 	state = State.IDLE
+
+func on_takeoff_complete()->void:
+	state = State.JUMP
+	height_speed = jump_intensity
+
+func on_land_complete()->void:
+	state = State.IDLE
+
 
 func on_emit_damage(damage_receiver: DamageReceiver):
 	var direction := Vector2.LEFT
@@ -85,8 +95,6 @@ func on_emit_damage(damage_receiver: DamageReceiver):
 	print(damage_receiver)
 
 func handle_airtime(delta: float)->void:
-	if state == State.TAKEOFF:
-		state = State.JUMP
 	if state == State.JUMP:
 		character_sprite.position = Vector2.UP * height
 		height += height_speed * delta
