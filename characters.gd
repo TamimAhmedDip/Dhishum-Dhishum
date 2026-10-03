@@ -10,14 +10,20 @@ extends CharacterBody2D
 
 
 var state = State.IDLE
-enum State {WALK, IDLE, ATTACK}
+enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND}
+
+var height: float = 0
+var height_speed: float = 0
+var GRAVITY: float = 600
 
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
 
 func _process(delta: float) -> void:
+	print(character_sprite.position.y)
 	handle_input()
 	handle_movement()
+	handle_airtime(delta)
 	handle_animation()
 	handle_flip()
 	move_and_slide()
@@ -27,6 +33,9 @@ func handle_input()->void:
 	velocity = direction * speed
 	if Input.is_action_just_pressed("Attack"):
 		state = State.ATTACK
+	if Input.is_action_just_pressed("Jump"):
+		state = State.TAKEOFF
+		height_speed = 100
 
 func handle_movement()->void:
 	if can_move():
@@ -44,6 +53,12 @@ func handle_animation()->void:
 		playerAnimation.play('idle')
 	elif state == State.ATTACK:
 		playerAnimation.play('punch')
+	elif state == State.TAKEOFF:
+		playerAnimation.play('takeoff')
+	elif state == State.JUMP:
+		playerAnimation.play('jump')
+	elif state == State.LAND:
+		playerAnimation.play('landing')
 
 func handle_flip()->void:
 	if velocity.x > 0:
@@ -68,3 +83,16 @@ func on_emit_damage(damage_receiver: DamageReceiver):
 		direction = Vector2.RIGHT
 	damage_receiver.damage_received.emit(damage, direction)
 	print(damage_receiver)
+
+func handle_airtime(delta: float)->void:
+	if state == State.TAKEOFF:
+		state = State.JUMP
+	if state == State.JUMP:
+		character_sprite.position = Vector2.UP * height
+		height += height_speed * delta
+		if height <= 0:
+			character_sprite.position.y = 0
+			state = State.LAND
+			print(character_sprite.position.y)
+		else: 
+			height_speed -= GRAVITY*delta

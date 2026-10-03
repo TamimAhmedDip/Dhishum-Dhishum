@@ -52,6 +52,55 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_x3wgy"]
+resource_name = "jump"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [62]
+}
+
+[sub_resource type="Animation" id="Animation_8erm5"]
+resource_name = "landing"
+length = 0.08
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [60]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_fkybt"]
 resource_name = "punch"
 length = 60.35
@@ -95,6 +144,23 @@ tracks/2/keys = {
 "values": [true, true, false]
 }
 
+[sub_resource type="Animation" id="Animation_3smsa"]
+resource_name = "takeoff"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [61]
+}
+
 [sub_resource type="Animation" id="Animation_vgqql"]
 resource_name = "walk"
 length = 0.4
@@ -117,7 +183,10 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_cvnsp"),
 &"idle": SubResource("Animation_6t5aa"),
+&"jump": SubResource("Animation_x3wgy"),
+&"landing": SubResource("Animation_8erm5"),
 &"punch": SubResource("Animation_fkybt"),
+&"takeoff": SubResource("Animation_3smsa"),
 &"walk": SubResource("Animation_vgqql")
 }
 
@@ -142,9 +211,6 @@ monitorable = false
 [node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=707432996]
 position = Vector2(-12.000001, -8.999999)
 shape = SubResource("RectangleShape2D_6t5aa")
-
-[node name="Shadow" parent="." index="1" unique_id=73937538]
-position = Vector2(7, 2)
 
 [node name="CharacterSprite" parent="." index="2" unique_id=764435570]
 texture = ExtResource("2_cvnsp")
