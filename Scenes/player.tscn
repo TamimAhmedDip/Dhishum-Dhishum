@@ -2,10 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://Scenes/characters.tscn" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://cr17f4jqty4d2" path="res://assets/art/characters/player.png" id="2_cvnsp"]
-[ext_resource type="PackedScene" uid="uid://c2bvqefew4emo" path="res://colliders/damage_emitter.tscn" id="3_6t5aa"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
-size = Vector2(6, 10)
 
 [sub_resource type="Animation" id="Animation_cvnsp"]
 length = 0.033333335
@@ -238,38 +234,39 @@ _data = {
 radius = 2.0
 height = 12.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+size = Vector2(10, 6)
+
 [node name="Player" unique_id=903786037 instance=ExtResource("1_v0iea")]
 collision_layer = 2
 collision_mask = 105
 health = 30
 damage = 4
-speed = 75.0
+speed = 45.0
 jump_intensity = 150.0
 
-[node name="DamageEmitter" parent="." index="0" unique_id=1799518949 instance=ExtResource("3_6t5aa")]
-rotation = 1.5707964
-collision_layer = 0
-collision_mask = 96
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=707432996]
-position = Vector2(-12.000001, -8.999999)
-shape = SubResource("RectangleShape2D_6t5aa")
-
-[node name="CharacterSprite" parent="." index="2" unique_id=764435570]
+[node name="CharacterSprite" parent="." index="1" unique_id=764435570]
 texture = ExtResource("2_cvnsp")
 centered = false
 offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 
-[node name="AnimationPlayer" parent="." index="3" unique_id=479746060]
+[node name="AnimationPlayer" parent="." index="2" unique_id=479746060]
 libraries/ = SubResource("AnimationLibrary_vgqql")
 
-[node name="CollisionShape2D" parent="." index="4" unique_id=1615538832]
+[node name="CollisionShape2D" parent="." index="3" unique_id=1615538832]
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cvnsp")
+
+[node name="DamageEmitter" parent="." index="4" unique_id=1799518949]
+collision_layer = 2
+collision_mask = 96
+monitoring = false
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=707432996]
+position = Vector2(8, -12)
+shape = SubResource("RectangleShape2D_cvnsp")
 
 [editable path="DamageEmitter"]

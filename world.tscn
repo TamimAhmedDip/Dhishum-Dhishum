@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b6sjcy4it0iey" path="res://world.gd" id="1_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://olar2eghcltg" path="res://Scenes/player.tscn" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://dy68ogytye7iy" path="res://props/barrel.tscn" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://csnpc3qbu25u6" path="res://Scenes/basic_enemy.tscn" id="5_036b0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -42,3 +43,9 @@ collision_mask = 3
 [node name="Player" parent="ActorNodes" unique_id=903786037 instance=ExtResource("2_fj7yv")]
 texture_filter = 1
 position = Vector2(-30, -5)
+
+[node name="BasicEnemy" parent="ActorNodes" unique_id=348162346 instance=ExtResource("5_036b0")]
+position = Vector2(-54, 11)
+
+[node name="BasicEnemy2" parent="ActorNodes" unique_id=263629884 instance=ExtResource("5_036b0")]
+position = Vector2(-1, 12)

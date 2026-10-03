@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://8dft0ukkrrs2" path="res://characters.gd" id="1_hs1m0"]
 [ext_resource type="Texture2D" uid="uid://cb78ihtgvkqyc" path="res://assets/art/characters/shadow.png" id="2_ejwxu"]
+[ext_resource type="PackedScene" uid="uid://c2bvqefew4emo" path="res://colliders/damage_emitter.tscn" id="3_xtbha"]
+[ext_resource type="PackedScene" uid="uid://cs7xrbl1xeetk" path="res://colliders/damage_receiver.tscn" id="4_sxmeh"]
 
 [node name="Characters" type="CharacterBody2D" unique_id=903786037]
 script = ExtResource("1_hs1m0")
@@ -18,3 +20,7 @@ texture_filter = 1
 root_node = NodePath("../CharacterSprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1615538832]
+
+[node name="DamageEmitter" parent="." unique_id=1799518949 instance=ExtResource("3_xtbha")]
+
+[node name="DamageReceiver" parent="." unique_id=695121476 instance=ExtResource("4_sxmeh")]
