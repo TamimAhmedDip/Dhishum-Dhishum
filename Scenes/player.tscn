@@ -70,6 +70,35 @@ tracks/0/keys = {
 "values": [62]
 }
 
+[sub_resource type="Animation" id="Animation_f1ek2"]
+resource_name = "jump_kick"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [63]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../DamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="Animation" id="Animation_8erm5"]
 resource_name = "landing"
 length = 0.08
@@ -198,6 +227,7 @@ _data = {
 &"RESET": SubResource("Animation_cvnsp"),
 &"idle": SubResource("Animation_6t5aa"),
 &"jump": SubResource("Animation_x3wgy"),
+&"jump_kick": SubResource("Animation_f1ek2"),
 &"landing": SubResource("Animation_8erm5"),
 &"punch": SubResource("Animation_fkybt"),
 &"takeoff": SubResource("Animation_3smsa"),

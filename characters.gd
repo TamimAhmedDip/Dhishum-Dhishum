@@ -11,7 +11,7 @@ extends CharacterBody2D
 
 
 var state = State.IDLE
-enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND}
+enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK}
 
 var anim_map :={
 	State.WALK : 'walk',
@@ -20,6 +20,7 @@ var anim_map :={
 	State.TAKEOFF : 'takeoff',
 	State.JUMP : 'jump',
 	State.LAND : 'landing',
+	State.JUMPKICK: 'jump_kick',
 }
 
 var height: float = 0
@@ -45,6 +46,8 @@ func handle_input()->void:
 		state = State.ATTACK
 	if can_jump() and Input.is_action_just_pressed("Jump"):
 		state = State.TAKEOFF
+	if can_jumpkick() and Input.is_action_just_pressed("Attack"):
+		state = State.JUMPKICK
 
 func handle_movement()->void:
 	if can_move():
@@ -71,8 +74,11 @@ func can_attack()->bool:
 func can_move()->bool:
 	return state == State.WALK or state == State.IDLE
 
-func can_jump():
+func can_jump()->bool:
 	return state == State.WALK or state == State.IDLE
+
+func can_jumpkick()->bool:
+	return state == State.JUMP
 
 
 #Action Complete - State Change Functions
@@ -95,7 +101,7 @@ func on_emit_damage(damage_receiver: DamageReceiver):
 	print(damage_receiver)
 
 func handle_airtime(delta: float)->void:
-	if state == State.JUMP:
+	if state == State.JUMP or state == State.JUMPKICK:
 		character_sprite.position = Vector2.UP * height
 		height += height_speed * delta
 		if height <= 0:
