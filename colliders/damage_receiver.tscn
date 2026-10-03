@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cs7xrbl1xeetk"]
+
+[ext_resource type="Script" uid="uid://td3k13hbivey" path="res://colliders/damage_receiver.gd" id="1_rhdop"]
+
+[node name="DamageReceiver" type="Area2D" unique_id=695121476]
+script = ExtResource("1_rhdop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1115777487]
+debug_color = Color(0.2602585, 0.6134499, 0.4647321, 0.41960785)

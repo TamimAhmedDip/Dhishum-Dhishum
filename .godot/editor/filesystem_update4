@@ -1,3 +1,11 @@
 res://world.tscn
 res://characters.gd
 res://Scenes/player.tscn
+res://Scenes/stages.tscn
+res://props/barrel.tscn
+res://world.gd
+res://Scenes/characters.tscn
+res://colliders/damage_emitter.tscn
+res://colliders/damage_receiver.tscn
+res://colliders/damage_receiver.gd
+res://props/barrel.gd

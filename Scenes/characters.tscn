@@ -11,10 +11,10 @@ texture = ExtResource("2_ejwxu")
 centered = false
 offset = Vector2(-7, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1615538832]
-
 [node name="CharacterSprite" type="Sprite2D" parent="." unique_id=764435570]
 texture_filter = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=479746060]
 root_node = NodePath("../CharacterSprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1615538832]

@@ -4,12 +4,16 @@ extends CharacterBody2D
 @export var damage: int
 @export var speed: float
 
-@onready var playerAnimation = $AnimationPlayer
-@onready var character_sprite = $CharacterSprite
+@onready var playerAnimation := $AnimationPlayer
+@onready var character_sprite := $CharacterSprite
+@onready var damage_emitter := $DamageEmitter
 
 
 var state = State.IDLE
 enum State {WALK, IDLE, ATTACK}
+
+func _ready() -> void:
+	damage_emitter.area_entered.connect(on_emit_damage.bind())
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -44,8 +48,10 @@ func handle_animation()->void:
 func handle_flip()->void:
 	if velocity.x > 0:
 		character_sprite.flip_h = false
+		damage_emitter.scale.y = 1
 	elif velocity.x < 0:
 		character_sprite.flip_h = true
+		damage_emitter.scale.y = -1
 
 func can_attack()->bool:
 	return can_move()
@@ -55,3 +61,10 @@ func can_move()->bool:
 
 func on_action_complete()->void:
 	state = State.IDLE
+
+func on_emit_damage(damage_receiver: DamageReceiver):
+	var direction := Vector2.LEFT
+	if damage_receiver.global_position.x > global_position.x:
+		direction = Vector2.RIGHT
+	damage_receiver.damage_received.emit(damage, direction)
+	print(damage_receiver)
