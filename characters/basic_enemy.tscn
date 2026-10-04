@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://csnpc3qbu25u6"]
 
-[ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://Scenes/characters.tscn" id="1_fecjr"]
+[ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://characters/characters.tscn" id="1_fecjr"]
+[ext_resource type="Script" uid="uid://jnyaekhcax3e" path="res://characters/basic_enemy.gd" id="2_55pga"]
 [ext_resource type="Texture2D" uid="uid://bd6ld02iip6a2" path="res://assets/art/characters/enemy_punk.png" id="2_lal1l"]
 
 [sub_resource type="Animation" id="Animation_fecjr"]
@@ -16,6 +17,37 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_55pga"]
+resource_name = "hurt"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [40, 41, 42]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_action_complete"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_r4aor"]
@@ -56,6 +88,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r4aor"]
 _data = {
 &"RESET": SubResource("Animation_fecjr"),
+&"hurt": SubResource("Animation_55pga"),
 &"idle": SubResource("Animation_r4aor"),
 &"walk": SubResource("Animation_lal1l")
 }
@@ -64,9 +97,16 @@ _data = {
 radius = 2.0
 height = 12.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et1d2"]
+size = Vector2(9, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_55pga"]
+size = Vector2(8, 8)
+
 [node name="BasicEnemy" unique_id=903786037 instance=ExtResource("1_fecjr")]
 collision_layer = 4
-collision_mask = 13
+collision_mask = 5
+script = ExtResource("2_55pga")
 health = 20
 damage = 2
 speed = 25.0
@@ -87,3 +127,22 @@ autoplay = &"idle"
 position = Vector2(0, -2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_fecjr")
+
+[node name="DamageEmitter" parent="." index="4" unique_id=1799518949]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=707432996]
+position = Vector2(7, -11)
+shape = SubResource("RectangleShape2D_et1d2")
+
+[node name="DamageReceiver" parent="." index="5" unique_id=695121476]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=1115777487]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_55pga")
+
+[editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

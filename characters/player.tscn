@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://olar2eghcltg"]
 
-[ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://Scenes/characters.tscn" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://goq4ysqk710x" path="res://characters/characters.tscn" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://cr17f4jqty4d2" path="res://assets/art/characters/player.png" id="2_cvnsp"]
+[ext_resource type="Script" uid="uid://cfud0gerg7a1i" path="res://characters/player.gd" id="2_tory2"]
 
 [sub_resource type="Animation" id="Animation_cvnsp"]
 length = 0.033333335
@@ -128,7 +129,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fkybt"]
 resource_name = "punch"
-length = 60.35
+length = 0.2
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -237,11 +238,15 @@ height = 12.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(10, 6)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tory2"]
+size = Vector2(6, 6)
+
 [node name="Player" unique_id=903786037 instance=ExtResource("1_v0iea")]
 collision_layer = 2
 collision_mask = 105
-health = 30
-damage = 4
+script = ExtResource("2_tory2")
+health = 40
+damage = 5
 speed = 45.0
 jump_intensity = 150.0
 
@@ -269,4 +274,9 @@ monitoring = false
 position = Vector2(8, -12)
 shape = SubResource("RectangleShape2D_cvnsp")
 
+[node name="CollisionShape2D" parent="DamageReceiver" parent_id_path=PackedInt32Array(695121476) index="0" unique_id=1115777487]
+position = Vector2(2, -18)
+shape = SubResource("RectangleShape2D_tory2")
+
 [editable path="DamageEmitter"]
+[editable path="DamageReceiver"]

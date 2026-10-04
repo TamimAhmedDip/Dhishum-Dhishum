@@ -1,6 +1,6 @@
-res://Scenes/player.tscn
-res://Scenes/characters.tscn
-res://colliders/damage_emitter.tscn
-res://Scenes/basic_enemy.tscn
 res://world.tscn
-res://Scenes/characters.gd
+res://characters/characters.gd
+res://characters/basic_enemy.tscn
+res://characters/characters.tscn
+res://characters/basic_enemy.gd
+res://characters/player.tscn
