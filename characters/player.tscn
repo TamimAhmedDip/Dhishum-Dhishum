@@ -245,10 +245,10 @@ size = Vector2(6, 6)
 collision_layer = 2
 collision_mask = 105
 script = ExtResource("2_tory2")
-health = 40
 damage = 5
 speed = 45.0
 jump_intensity = 150.0
+knockback_intensity = 10.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=764435570]
 texture = ExtResource("2_cvnsp")

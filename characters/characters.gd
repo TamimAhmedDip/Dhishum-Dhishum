@@ -1,10 +1,11 @@
 class_name Character
 extends CharacterBody2D
 
-@export var health: int
+@export var max_health: int
 @export var damage: int
 @export var speed: float
 @export var jump_intensity: float
+@export var knockback_intensity: float 
 
 @onready var playerAnimation := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
@@ -26,6 +27,7 @@ var anim_map :={
 	State.HURT: 'hurt',
 }
 
+var current_health: float
 var height: float = 0
 var height_speed: float = 0
 var GRAVITY: float = 600
@@ -33,6 +35,8 @@ var GRAVITY: float = 600
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
 	damage_receiver.damage_received.connect(on_received_damage.bind())
+	current_health = max_health
+	
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -88,9 +92,13 @@ func on_takeoff_complete()->void:
 func on_land_complete()->void:
 	state = State.IDLE
 
-func on_received_damage(_damage:int, _direction: Vector2)->void:
-	if playerAnimation.has_animation(anim_map[State.HURT]):
+func on_received_damage(damage:int, direction: Vector2)->void:
+	if current_health <= 0:
+		queue_free()
+	else:
 		state = State.HURT
+		current_health -= damage
+		velocity = direction * knockback_intensity
 
 func on_emit_damage(damage_receiver: DamageReceiver):
 	var direction := Vector2.LEFT
