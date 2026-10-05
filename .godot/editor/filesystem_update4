@@ -1,6 +1,8 @@
-res://world.tscn
-res://characters/characters.gd
-res://characters/basic_enemy.tscn
-res://characters/characters.tscn
-res://characters/basic_enemy.gd
 res://characters/player.tscn
+res://characters/enemy_space.tscn
+res://characters/player.gd
+res://characters/basic_enemy.gd
+res://characters/characters.gd
+res://characters/enemy_space.gd
+res://colliders/damage_receiver.gd
+res://props/barrel.gd

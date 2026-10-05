@@ -45,9 +45,21 @@ texture_filter = 1
 position = Vector2(-30, -5)
 
 [node name="BasicEnemy2" parent="ActorNodes" unique_id=263629884 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(-1, 12)
+position = Vector2(7, 13)
 player = NodePath("../Player")
 
 [node name="BasicEnemy3" parent="ActorNodes" unique_id=1372505316 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(-54, 11)
+player = NodePath("../Player")
+
+[node name="BasicEnemy4" parent="ActorNodes" unique_id=1395118994 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(-65, -12)
+player = NodePath("../Player")
+
+[node name="BasicEnemy5" parent="ActorNodes" unique_id=12200085 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(-29, 21)
+player = NodePath("../Player")
+
+[node name="BasicEnemy6" parent="ActorNodes" unique_id=980832277 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(18, -11)
 player = NodePath("../Player")
