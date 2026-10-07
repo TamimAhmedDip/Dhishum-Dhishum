@@ -1,8 +1,5 @@
 res://characters/player.tscn
-res://characters/enemy_space.tscn
+res://characters/characters.gd
+res://characters/basic_enemy.tscn
 res://characters/player.gd
 res://characters/basic_enemy.gd
-res://characters/characters.gd
-res://characters/enemy_space.gd
-res://colliders/damage_receiver.gd
-res://props/barrel.gd

@@ -8,6 +8,12 @@ func handle_input()->void:
 	velocity = direction * speed
 	if can_attack() and Input.is_action_just_pressed("Attack"):
 		state = State.ATTACK
+		if is_last_hit_successful:
+			attack_combo_index = (attack_combo_index + 1) % attack_type.size()
+			is_last_hit_successful = false
+		else:
+			attack_combo_index = 0
+
 	if can_jump() and Input.is_action_just_pressed("Jump"):
 		state = State.TAKEOFF
 	if can_jumpkick() and Input.is_action_just_pressed("Attack"):

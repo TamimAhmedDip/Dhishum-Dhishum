@@ -20,6 +20,7 @@ func handle_input()->void:
 
 func on_received_damage(damage_amount:int, direction: Vector2, hit_type: DamageReceiver.HitType):
 	super.on_received_damage(damage_amount, direction, hit_type)
+	print(str(damage_amount))
 	if current_health == 0:
 		player.free_slot(self)
 		

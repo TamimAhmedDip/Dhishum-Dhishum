@@ -172,7 +172,7 @@ height = 12.0
 size = Vector2(9, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_55pga"]
-size = Vector2(8, 8)
+size = Vector2(10, 12)
 
 [node name="BasicEnemy" unique_id=903786037 instance=ExtResource("1_fecjr")]
 collision_layer = 4
@@ -182,7 +182,7 @@ max_health = 25
 damage = 2
 duration_grounded = 1000.0
 speed = 25.0
-knockback_intensity = 100.0
+knockback_intensity = 20.0
 knockdown_intensity = 70.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=764435570]
@@ -215,7 +215,7 @@ collision_layer = 32
 collision_mask = 2
 
 [node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=1115777487]
-position = Vector2(0, -18)
+position = Vector2(-1, -19)
 shape = SubResource("RectangleShape2D_55pga")
 
 [editable path="DamageEmitter"]
