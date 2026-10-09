@@ -25,3 +25,7 @@ root_node = NodePath("../CharacterSprite")
 
 [node name="DamageReceiver" parent="." unique_id=695121476 instance=ExtResource("4_sxmeh")]
 monitoring = false
+
+[node name="CollateralDamageEmitter" parent="." unique_id=1633664063 instance=ExtResource("3_xtbha")]
+monitoring = false
+monitorable = false

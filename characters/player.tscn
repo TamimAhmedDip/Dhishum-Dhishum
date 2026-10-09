@@ -217,8 +217,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_x0jl3"]
 resource_name = "punch_alt"
-length = 0.2
-step = 0.1
+length = 0.3
+step = 0.15
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -370,14 +370,14 @@ radius = 2.0
 height = 12.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(10, 6)
+size = Vector2(12, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tory2"]
 size = Vector2(6, 6)
 
 [node name="Player" unique_id=903786037 instance=ExtResource("1_v0iea")]
 collision_layer = 2
-collision_mask = 105
+collision_mask = 9
 script = ExtResource("2_tory2")
 damage = 5
 damage_power = 8
@@ -405,9 +405,10 @@ shape = SubResource("CapsuleShape2D_cvnsp")
 collision_layer = 2
 collision_mask = 96
 monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=707432996]
-position = Vector2(8, -12)
+position = Vector2(9, -13)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="CollisionShape2D" parent="DamageReceiver" parent_id_path=PackedInt32Array(695121476) index="0" unique_id=1115777487]

@@ -13,6 +13,8 @@ func handle_input()->void:
 			is_last_hit_successful = false
 		else:
 			attack_combo_index = 0
+	if can_attack() and Input.is_action_just_pressed("Round Kick"):
+		state = State.ATTACK
 
 	if can_jump() and Input.is_action_just_pressed("Jump"):
 		state = State.TAKEOFF

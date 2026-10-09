@@ -20,13 +20,17 @@ position = Vector2(50, 32)
 
 [node name="Invisible Walls" type="Node2D" parent="Camera" unique_id=1922017532]
 
-[node name="Left Wall" type="StaticBody2D" parent="Camera/Invisible Walls" unique_id=1394483355]
+[node name="Left Wall" type="AnimatableBody2D" parent="Camera/Invisible Walls" unique_id=1509557644]
+collision_layer = 128
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Invisible Walls/Left Wall" unique_id=2090224290]
 position = Vector2(-50, 0)
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="Right Wall" type="StaticBody2D" parent="Camera/Invisible Walls" unique_id=899319133]
+[node name="Right Wall" type="AnimatableBody2D" parent="Camera/Invisible Walls" unique_id=1118511403]
+collision_layer = 128
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/Invisible Walls/Right Wall" unique_id=1869835485]
 position = Vector2(50, 0)

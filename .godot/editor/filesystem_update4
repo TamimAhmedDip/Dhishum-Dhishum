@@ -1,5 +1,2 @@
 res://characters/player.tscn
-res://characters/characters.gd
-res://characters/basic_enemy.tscn
-res://characters/player.gd
-res://characters/basic_enemy.gd
+res://world.tscn
