@@ -13,7 +13,7 @@ func handle_input()->void:
 		if player_slot != null:
 			var distance_vector := (player_slot.global_position - global_position)
 			var direction := distance_vector.normalized()
-			if distance_vector.length() < 1:
+			if distance_vector.length() < 0.5:
 				velocity = Vector2.ZERO
 			else:
 				velocity = direction * speed
@@ -24,5 +24,12 @@ func on_received_damage(damage_amount:int, direction: Vector2, hit_type: DamageR
 	if current_health == 0:
 		player.free_slot(self)
 		
+func handle_heading()->void:
+	if player == null:
+		return
+	if player.position.x > position.x:
+		heading = Vector2.RIGHT
+	elif player.position.x < position.x:
+		heading = Vector2.LEFT
 			
 			

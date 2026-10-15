@@ -238,7 +238,7 @@ tracks/1/path = NodePath("..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.05),
+"times": PackedFloat32Array(0.2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -377,14 +377,18 @@ size = Vector2(6, 6)
 
 [node name="Player" unique_id=903786037 instance=ExtResource("1_v0iea")]
 collision_layer = 2
-collision_mask = 9
+collision_mask = 137
 script = ExtResource("2_tory2")
+max_health = 0
 damage = 5
 damage_power = 8
+duration_grounded = 0.0
 speed = 45.0
 jump_intensity = 150.0
 knockback_intensity = 10.0
+knockdown_intensity = 0.0
 can_respawn = true
+flight_speed = 0.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=764435570]
 texture = ExtResource("2_cvnsp")
@@ -431,3 +435,4 @@ position = Vector2(-17, -4)
 
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]

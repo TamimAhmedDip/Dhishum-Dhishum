@@ -25,6 +25,7 @@ enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUN
 var attack_type :=  ['punch', 'punch_alt', 'kick', 'round_kick']
 var attack_combo_index := 0
 var is_last_hit_successful := false
+var heading = Vector2.RIGHT
 
 var anim_map :={
 	State.WALK : 'walk',
@@ -61,9 +62,9 @@ func _process(delta: float) -> void:
 	handle_airtime(delta)
 	handle_animation()
 	handle_grounded()
+	handle_heading()
 	handle_flip()
 	move_and_slide()
-	collateral_damage_emitter.monitoring = state == State.FLY
 	collision_shape.disabled = is_collision_disabled()
 	handle_death(delta)
 
@@ -83,11 +84,14 @@ func handle_animation()->void:
 	elif playerAnimation.has_animation(anim_map[state]) and playerAnimation.current_animation != anim_map[state]:
 		playerAnimation.play(anim_map[state])
 
+func handle_heading()->void:
+	pass
+
 func handle_flip()->void:
-	if velocity.x > 0:
+	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
 		damage_emitter.scale.x = 1
-	elif velocity.x < 0:
+	elif heading == Vector2.LEFT:
 		character_sprite.flip_h = true
 		damage_emitter.scale.x = -1
 
@@ -123,7 +127,7 @@ func on_received_damage(damage_amount:int, direction: Vector2, hit_type: DamageR
 			velocity = direction * knockback_intensity
 		elif hit_type == DamageReceiver.HitType.POWER:
 			state = State.FLY
-			velocity = direction * flight_speed
+			velocity = direction*flight_speed
 		else:
 			state = State.HURT
 			velocity = direction * knockback_intensity
@@ -189,8 +193,16 @@ func is_collision_disabled()->bool:
 func can_get_hurt()->bool:
 	return [State.WALK, State.IDLE, State.TAKEOFF, State.JUMP, State.LAND].has(state)
 
-func on_wall_hit(wall: AnimatableBody2D)->void:
+func on_emit_collateral_damage(receiver: DamageReceiver):
+	if receiver != damage_receiver:
+		var direction := Vector2.LEFT
+		if receiver.global_position.x > global_position.x:
+			direction = Vector2.RIGHT
+		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCDOWN)	
+		
+
+func on_wall_hit(wall: AnimatableBody2D):
 	state = State.FALL
 	height_speed = knockback_intensity
-	velocity = -velocity/2.0
-	print('Yo')
+	velocity = -velocity / 2.0
+	
