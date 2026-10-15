@@ -1,2 +1,4 @@
 res://characters/characters.gd
 res://characters/player.tscn
+res://characters/basic_enemy.tscn
+res://Scenes/characters.tscn

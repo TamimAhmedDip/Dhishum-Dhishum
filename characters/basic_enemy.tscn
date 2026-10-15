@@ -37,6 +37,24 @@ tracks/0/keys = {
 "values": [51]
 }
 
+[sub_resource type="Animation" id="Animation_njhuj"]
+resource_name = "fly"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [50]
+}
+
 [sub_resource type="Animation" id="Animation_4epvt"]
 resource_name = "grounded"
 length = 0.1
@@ -57,8 +75,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_55pga"]
 resource_name = "hurt"
-length = 0.3
-step = 0.1
+length = 0.15
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -66,7 +84,7 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
+"times": PackedFloat32Array(0, 0.05, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [40, 41, 42]
@@ -78,7 +96,7 @@ tracks/1/path = NodePath("..")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.15),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -157,6 +175,7 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_fecjr"),
 &"fall": SubResource("Animation_et1d2"),
+&"fly": SubResource("Animation_njhuj"),
 &"grounded": SubResource("Animation_4epvt"),
 &"hurt": SubResource("Animation_55pga"),
 &"idle": SubResource("Animation_r4aor"),
@@ -184,6 +203,7 @@ duration_grounded = 1000.0
 speed = 25.0
 knockback_intensity = 20.0
 knockdown_intensity = 70.0
+flight_speed = 120.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=764435570]
 texture = ExtResource("2_lal1l")

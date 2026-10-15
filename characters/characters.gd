@@ -10,6 +10,7 @@ extends CharacterBody2D
 @export var knockback_intensity: float 
 @export var knockdown_intensity: float
 @export var can_respawn: bool
+@export var flight_speed: float
 
 @onready var playerAnimation := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
@@ -19,7 +20,7 @@ extends CharacterBody2D
 
 
 var state = State.IDLE
-enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH}
+enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY}
 var attack_type :=  ['punch', 'punch_alt', 'kick', 'round_kick']
 var attack_combo_index := 0
 var is_last_hit_successful := false
@@ -36,6 +37,7 @@ var anim_map :={
 	State.FALL: 'fall',
 	State.GROUNDED: 'grounded',
 	State.DEATH: 'grounded',
+	State.FLY: 'fly',
 }
 
 var current_health: float
@@ -58,7 +60,7 @@ func _process(delta: float) -> void:
 	handle_grounded()
 	handle_flip()
 	move_and_slide()
-	collision_shape.disabled = state == State.GROUNDED
+	collision_shape.disabled = is_collision_disabled()
 	handle_death(delta)
 
 func handle_input()->void:
@@ -114,9 +116,13 @@ func on_received_damage(damage_amount:int, direction: Vector2, hit_type: DamageR
 		if current_health <= 0 or hit_type == DamageReceiver.HitType.KNOCDOWN:
 			state = State.FALL
 			height_speed = knockdown_intensity
+			velocity = direction * knockback_intensity
+		elif hit_type == DamageReceiver.HitType.POWER:
+			state = State.FLY
+			velocity = direction*flight_speed
 		else:
 			state = State.HURT
-		velocity = direction * knockback_intensity
+			velocity = direction * knockback_intensity
 
 func on_emit_damage(receiver: DamageReceiver):
 	is_last_hit_successful = true
@@ -164,7 +170,7 @@ func handle_death(delta)->void:
 		queue_free()
 		
 func is_collision_disabled()->bool:
-	return [State.GROUNDED, State.DEATH].has(state)
+	return [State.GROUNDED, State.DEATH, State.FLY].has(state)
 
 func can_get_hurt()->bool:
 	return [State.WALK, State.IDLE, State.TAKEOFF, State.JUMP, State.LAND].has(state)
