@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bspf57562aomh"]
 
 [ext_resource type="Texture2D" uid="uid://cb78ihtgvkqyc" path="res://assets/art/characters/shadow.png" id="2_ejwxu"]
+[ext_resource type="PackedScene" uid="uid://c2bvqefew4emo" path="res://colliders/damage_emitter.tscn" id="2_hs1m0"]
 
 [node name="Characters" type="CharacterBody2D" unique_id=903786037]
 
@@ -16,3 +17,7 @@ texture_filter = 1
 root_node = NodePath("../CharacterSprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1615538832]
+
+[node name="CollateralDamageEmitter" parent="." unique_id=1799518949 instance=ExtResource("2_hs1m0")]
+
+[editable path="CollateralDamageEmitter"]

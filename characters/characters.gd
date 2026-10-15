@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var playerAnimation := $AnimationPlayer
 @onready var character_sprite := $CharacterSprite
 @onready var damage_emitter := $DamageEmitter
+@onready var collateral_damage_emitter: Area2D = $CollateralDamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
 @onready var collision_shape:= $CollisionShape2D
 
@@ -24,6 +25,7 @@ enum State {WALK, IDLE, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUN
 var attack_type :=  ['punch', 'punch_alt', 'kick', 'round_kick']
 var attack_combo_index := 0
 var is_last_hit_successful := false
+var heading = Vector2.RIGHT
 
 var anim_map :={
 	State.WALK : 'walk',
@@ -49,6 +51,8 @@ var time_since_grounded := Time.get_ticks_msec()
 func _ready() -> void:
 	damage_emitter.area_entered.connect(on_emit_damage.bind())
 	damage_receiver.damage_received.connect(on_received_damage.bind())
+	collateral_damage_emitter.area_entered.connect(on_emit_collateral_damage.bind())
+	collateral_damage_emitter.body_entered.connect(on_wall_hit.bind())
 	current_health = max_health
 	
 
@@ -58,6 +62,7 @@ func _process(delta: float) -> void:
 	handle_airtime(delta)
 	handle_animation()
 	handle_grounded()
+	handle_heading()
 	handle_flip()
 	move_and_slide()
 	collision_shape.disabled = is_collision_disabled()
@@ -79,11 +84,14 @@ func handle_animation()->void:
 	elif playerAnimation.has_animation(anim_map[state]) and playerAnimation.current_animation != anim_map[state]:
 		playerAnimation.play(anim_map[state])
 
+func handle_heading()->void:
+	pass
+
 func handle_flip()->void:
-	if velocity.x > 0:
+	if heading == Vector2.RIGHT:
 		character_sprite.flip_h = false
 		damage_emitter.scale.x = 1
-	elif velocity.x < 0:
+	elif heading == Vector2.LEFT:
 		character_sprite.flip_h = true
 		damage_emitter.scale.x = -1
 
@@ -174,3 +182,17 @@ func is_collision_disabled()->bool:
 
 func can_get_hurt()->bool:
 	return [State.WALK, State.IDLE, State.TAKEOFF, State.JUMP, State.LAND].has(state)
+
+func on_emit_collateral_damage(receiver: DamageReceiver):
+	if receiver != damage_receiver:
+		var direction := Vector2.LEFT
+		if receiver.global_position.x > global_position.x:
+			direction = Vector2.RIGHT
+		receiver.damage_received.emit(0, direction, DamageReceiver.HitType.KNOCDOWN)	
+		
+
+func on_wall_hit(wall: AnimatableBody2D):
+	state = State.FALL
+	height_speed = knockback_intensity
+	velocity = -velocity / 2.0
+	
